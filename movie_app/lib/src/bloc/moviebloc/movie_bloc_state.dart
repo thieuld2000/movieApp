@@ -15,7 +15,7 @@ class MovieLoaded extends MovieState {
   const MovieLoaded(this.movieList);
 
   @override
-  List<Object> get props => (movieList);
+  List<Object> get props => [movieList];
 }
 
 class MovieError extends MovieState {

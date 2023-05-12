@@ -6,6 +6,8 @@ import '../../model/movie.dart';
 
 class MovieBloc extends Bloc<MovieEvent, MovieState> {
   MovieBloc() : super(MovieLoading());
+
+  @override
   Stream<MovieState> mapEventToState(MovieEvent event) async* {
     if (event is MovieEventStarted) {
       yield* _mapMovieEventStateToState(event.movieId, event.query);
@@ -21,12 +23,12 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
       if (movieId == 0) {
         movieList = await service.getNowPlayingMovie();
       } else {
-        //print(movieId);
         movieList = await service.getMovieByGenre(movieId);
       }
 
       yield MovieLoaded(movieList);
     } on Exception catch (e) {
+      print(e);
       yield MovieError(e);
     }
   }

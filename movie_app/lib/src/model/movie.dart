@@ -2,9 +2,9 @@ class Movie {
   final String? backdropPath;
   final int? id;
   final String? originalLanguage;
-  final String? orifinalTitle;
+  final String? originalTitle;
   final String? overview;
-  final double? popularity;
+  final num? popularity;
   final String? posterPath;
   final String? releaseDate;
   final String? title;
@@ -18,7 +18,7 @@ class Movie {
     this.backdropPath,
     this.id,
     this.originalLanguage,
-    this.orifinalTitle,
+    this.originalTitle,
     this.overview,
     this.popularity,
     this.posterPath,
@@ -29,23 +29,23 @@ class Movie {
     this.voteAverage,
   });
 
-  factory Movie.fromjson(dynamic json) {
+  factory Movie.fromJson(dynamic json) {
     if (json == null) {
       return Movie();
     }
 
     return Movie(
-        backdropPath: json['backdropPath'],
+        backdropPath: json['backdrop_path'],
         id: json['id'],
-        originalLanguage: json['originalLanguage'],
-        orifinalTitle: json['orifinalTitle'],
+        originalLanguage: json['original_language'],
+        originalTitle: json['original_title'],
         overview: json['overview'],
         popularity: json['popularity'],
-        posterPath: json['posterPath'],
-        releaseDate: json['releaseDate'],
+        posterPath: json['poster_path'],
+        releaseDate: json['release_date'],
         title: json['title'],
         video: json['video'],
-        voteCount: json['voteCount'],
-        voteAverage: json['voteAverage'].toString());
+        voteCount: json['vote_count'],
+        voteAverage: json['vote_average'].toString());
   }
 }
