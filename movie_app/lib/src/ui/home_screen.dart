@@ -57,20 +57,23 @@ Widget _buildBody(BuildContext context) {
               ),
               child: Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 0.5),
                 decoration: BoxDecoration(
-                  color: Colors.black54,
+                  color: const Color.fromRGBO(106, 110, 116, 0.5),
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: const TextField(
                   decoration: InputDecoration(
-                    hintText: "Search",
-                    hintStyle: TextStyle(color: Colors.white54),
-                    icon: Icon(
-                      CupertinoIcons.search,
-                      color: Colors.white54,
-                    ),
-                  ),
+                      border: OutlineInputBorder(borderSide: BorderSide.none),
+                      hintText: "Search",
+                      hintStyle: TextStyle(
+                        color: Colors.white54,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 17,
+                        fontFamily: 'muli',
+                      ),
+                      suffixIcon: Icon(Icons.search),
+                      suffixIconColor: Colors.white54),
                 ),
               ),
             ),

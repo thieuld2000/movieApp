@@ -27,7 +27,6 @@ class WatchMovieBloc extends Bloc<WatchMovieEvent, WatchMovieState> {
       yield WatchMovieLoaded(movieUpcomingList, movieTopRateList,
           moviePopularList, movieNowPlayingList);
     } on Exception catch (e) {
-      print(e);
       yield MovieError(e);
     }
   }

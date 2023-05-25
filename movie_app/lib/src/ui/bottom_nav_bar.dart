@@ -82,13 +82,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return Scaffold(
       body: buildCurrentPage(currentIndex),
       bottomNavigationBar: BottomNavigationBar(
-        // border: Border(
-        //   top: BorderSide(
-        //     color: Colors.grey.shade800,
-        //     width: .4,
-        //   ),
-        // ),
         backgroundColor: const Color.fromRGBO(36, 42, 50, 1),
+        unselectedItemColor: Colors.white54,
         onTap: (index) {
           setState(() {
             currentIndex = index;
@@ -119,12 +114,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              CupertinoIcons.heart,
+              CupertinoIcons.folder_circle_fill,
               color: Colors.white54,
             ),
-            label: 'Favorites',
+            label: 'Watch list',
             activeIcon: Icon(
-              CupertinoIcons.heart_solid,
+              CupertinoIcons.folder_circle_fill,
             ),
           ),
         ],

@@ -22,10 +22,10 @@ class DelayedDisplay extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _DelayedDisplayState createState() => _DelayedDisplayState();
+  DelayedDisplayState createState() => DelayedDisplayState();
 }
 
-class _DelayedDisplayState extends State<DelayedDisplay>
+class DelayedDisplayState extends State<DelayedDisplay>
     with TickerProviderStateMixin {
   late AnimationController _opacityController;
 

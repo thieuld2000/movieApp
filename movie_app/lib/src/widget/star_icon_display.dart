@@ -8,10 +8,10 @@ class StarDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: List.generate(5, (index) {
+      children: List.generate(1, (index) {
         return Icon(
-          index < value ? CupertinoIcons.star_fill : CupertinoIcons.star,
-          color: Colors.amber,
+          index > value ? CupertinoIcons.star_fill : CupertinoIcons.star,
+          color: Colors.amber[800],
           size: 16,
         );
       }),

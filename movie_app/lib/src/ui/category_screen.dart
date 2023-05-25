@@ -1,36 +1,24 @@
 import 'dart:io';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/src/bloc/watch_moviebloc/watch_movie_bloc.dart';
 import 'package:movie_app/src/bloc/watch_moviebloc/watch_movie_bloc_event.dart';
 import 'package:movie_app/src/bloc/watch_moviebloc/watch_movie_bloc_state.dart';
 import 'package:movie_app/src/model/movie.dart';
-
-import '../widget/animation.dart';
-import '../widget/header_text.dart';
 import '../widget/horizontal_list_cards.dart';
-import '../widget/movie_home.dart';
 
 class BuildWidgetCategory extends StatefulWidget {
-  final int selectedMovie;
-  const BuildWidgetCategory({Key? key, this.selectedMovie = 2})
-      : super(key: key);
+  const BuildWidgetCategory({Key? key}) : super(key: key);
 
   @override
   BuildWidgetCategoryState createState() => BuildWidgetCategoryState();
 }
 
 class BuildWidgetCategoryState extends State<BuildWidgetCategory> {
-  late int selectedMovie;
-
   @override
   void initState() {
     super.initState();
-    selectedMovie = widget.selectedMovie;
   }
 
   @override
@@ -39,7 +27,7 @@ class BuildWidgetCategoryState extends State<BuildWidgetCategory> {
       providers: [
         BlocProvider<WatchMovieBloc>(
           create: (_) =>
-              WatchMovieBloc()..add(WatchMovieEventStarted(selectedMovie)),
+              WatchMovieBloc()..add(const WatchMovieEventStarted('')),
         ),
       ],
       child: _buildWatchMovie(context),
@@ -87,40 +75,49 @@ class CategoryScreenWidget extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-      return AnnotatedRegion(
-        value: SystemUiOverlayStyle.light,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const HeaderText(text: 'Popular'),
-              HorizontalListViewMovies(
-                list: popular,
-              ),
-              const HeaderText(text: "Top Rated"),
-              HorizontalListViewMovies(
-                list: topRated,
-              ),
-              const SizedBox(
-                height: 14,
-              ),
-              const HeaderText(text: "Upcoming"),
-              HorizontalListViewMovies(
-                list: upcoming,
-              ),
-              const SizedBox(
-                height: 14,
-              ),
-              const HeaderText(text: "Now playing"),
-              HorizontalListViewMovies(
-                list: nowPlaying,
-              )
-            ],
+    List<String> tabs = [
+      'Nowplaying',
+      'Upcomming',
+      'Top rated',
+      'Popular',
+    ];
+    return DefaultTabController(
+      initialIndex: 0,
+      length: tabs.length,
+      child: Column(
+        children: [
+          TabBar(
+            isScrollable: true,
+            indicatorColor: Colors.white60,
+            tabs: tabs
+                .map(
+                  (tab) => Tab(
+                    icon: Text(
+                      tab,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 17.0,
+                              fontFamily: 'muli',
+                              color: Colors.white60),
+                    ),
+                  ),
+                )
+                .toList(),
           ),
-        ),
-      );
-    });
+          SizedBox(
+            height: MediaQuery.of(context).size.width,
+            child: TabBarView(children: [
+              Tab(child: HorizontalListViewMovies(list: nowPlaying)),
+              Tab(child: HorizontalListViewMovies(list: upcoming)),
+              Tab(child: HorizontalListViewMovies(list: topRated)),
+              Tab(child: HorizontalListViewMovies(list: popular)),
+            ]),
+          )
+        ],
+      ),
+    );
   }
 }

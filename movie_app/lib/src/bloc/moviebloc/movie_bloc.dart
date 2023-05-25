@@ -28,7 +28,6 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
 
       yield MovieLoaded(movieList);
     } on Exception catch (e) {
-      print(e);
       yield MovieError(e);
     }
   }

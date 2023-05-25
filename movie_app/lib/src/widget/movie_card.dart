@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/src/widget/star_icon_display.dart';
 
+import '../ui/movie_info_screen/movie_Info_screen.dart';
 import 'animation.dart';
 import 'constants.dart';
 
@@ -32,59 +33,33 @@ class MovieCard extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () {
-          onTap();
+          if (isMovie) {
+            pushNewScreen(
+              context,
+              MovieDetailsScreen(
+                id: id,
+                backdrop: backdrop,
+              ),
+            );
+          }
         },
         child: Container(
           constraints: const BoxConstraints(minHeight: 280),
-          child: Column(
-            children: [
-              Container(
-                height: 200,
-                width: 130,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.grey.shade900,
-                  boxShadow: kElevationToShadow[8],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: CachedNetworkImage(
-                    imageUrl: 'http://image.tmdb.org/t/p/w500/${poster}',
-                    fit: BoxFit.cover,
-                  ),
-                ),
+          child: Container(
+            height: 180,
+            width: 120,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.grey.shade900,
+              boxShadow: kElevationToShadow[8],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: CachedNetworkImage(
+                imageUrl: 'http://image.tmdb.org/t/p/w500/$poster',
+                fit: BoxFit.cover,
               ),
-              const SizedBox(height: 10),
-              SizedBox(
-                width: 130,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: normalText.copyWith(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: color,
-                      ),
-                    ),
-                    Text(
-                      date,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: normalText.copyWith(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w900,
-                        color: color.withOpacity(.8),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
+            ),
           ),
         ),
       ),
@@ -118,17 +93,17 @@ class HorizontalMovieCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: InkWell(
-        // onTap: () {
-        //   if (isMovie) {
-        //     pushNewScreen(
-        //       context,
-        //       MovieDetailsScreen(
-        //         id: id,
-        //         backdrop: backdrop,
-        //       ),
-        //     );
-        //   }
-        // },
+        onTap: () {
+          if (isMovie) {
+            pushNewScreen(
+              context,
+              MovieDetailsScreen(
+                id: id,
+                backdrop: backdrop,
+              ),
+            );
+          }
+        },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -141,7 +116,7 @@ class HorizontalMovieCard extends StatelessWidget {
                   child: AspectRatio(
                     aspectRatio: 9 / 14,
                     child: CachedNetworkImage(
-                      imageUrl: 'http://image.tmdb.org/t/p/w500/${poster}',
+                      imageUrl: 'http://image.tmdb.org/t/p/w500/$poster',
                       fit: BoxFit.cover,
                       progressIndicatorBuilder:
                           (context, url, downloadProgress) => Container(
