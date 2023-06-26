@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_app/src/ui/search_screen.dart';
+import 'watch_list_screen.dart';
 import 'home_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -33,11 +35,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
   //             backdrop: '',
   //           ),
   //         );
-  //       } else if (type == "tv") {
-  //         pushNewScreen(
-  //           context,
-  //           TvShowDetailScreen(id: id, backdrop: ''),
-  //         );
   //       } else if (type == 'cast') {
   //         pushNewScreen(
   //           context,
@@ -46,19 +43,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   //             backdrop: '',
   //           ),
   //         );
-  //       } else if (type == 'season') {
-  //         var snum = link.split("-")[2];
-  //         pushNewScreen(
-  //           context,
-  //           SeasonDetailScreen(
-  //             id: id,
-  //             backdrop: '',
-  //             snum: snum,
-  //           ),
-  //         );
   //       }
   //     }
-  //     // ignore: empty_catches
   //   } on Exception {}
   // }
 
@@ -71,9 +57,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
           return const HomeScreen();
 
         case 1:
-        // return const SearchPage();
+          return const SearchPage();
         case 2:
-        // return const FavoriteScreen();
+          return const WatchListScreen();
         default:
           return Container();
       }
@@ -114,16 +100,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              CupertinoIcons.folder_circle_fill,
+              CupertinoIcons.bookmark_solid,
               color: Colors.white54,
             ),
-            label: 'Watch list',
+            label: 'WatchList',
             activeIcon: Icon(
-              CupertinoIcons.folder_circle_fill,
+              CupertinoIcons.bookmark_solid,
             ),
           ),
         ],
       ),
     );
   }
+
+  getInitialLink() {}
 }

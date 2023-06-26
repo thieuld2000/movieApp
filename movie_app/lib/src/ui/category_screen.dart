@@ -88,7 +88,8 @@ class CategoryScreenWidget extends StatelessWidget {
         children: [
           TabBar(
             isScrollable: true,
-            indicatorColor: Colors.white60,
+            indicatorColor: Colors.white24,
+            indicatorPadding: const EdgeInsets.only(left: 20.0, right: 20.0),
             tabs: tabs
                 .map(
                   (tab) => Tab(

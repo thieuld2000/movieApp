@@ -42,8 +42,8 @@ class ErrorPage extends StatelessWidget {
   }
 }
 
-class EmptyFavorites extends StatelessWidget {
-  const EmptyFavorites({Key? key}) : super(key: key);
+class EmptyWatxhList extends StatelessWidget {
+  const EmptyWatxhList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,14 +63,14 @@ class EmptyFavorites extends StatelessWidget {
               height: 10,
             ),
             Text(
-              "Your Favorites is Empty",
+              "Your WatchList is Empty",
               style: heading.copyWith(color: Colors.white.withOpacity(.9)),
             ),
             const SizedBox(
               height: 10,
             ),
             Text(
-              "Add Your Favorite movies and tv shows to track your favorites list.",
+              "Add Your  movies  to track your WatchList list.",
               textAlign: TextAlign.center,
               style: normalText.copyWith(color: Colors.white.withOpacity(.9)),
             ),
@@ -81,8 +81,8 @@ class EmptyFavorites extends StatelessWidget {
   }
 }
 
-class WatchListFavorites extends StatelessWidget {
-  const WatchListFavorites({Key? key}) : super(key: key);
+class WatchList extends StatelessWidget {
+  const WatchList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +109,7 @@ class WatchListFavorites extends StatelessWidget {
               height: 10,
             ),
             Text(
-              "Add shows and movies to watchlist keep track of what you want to watch..",
+              "Add shows and movies to watchlist keep track of what you want to watch.",
               textAlign: TextAlign.center,
               style: normalText.copyWith(color: Colors.white.withOpacity(.9)),
             ),
@@ -148,7 +148,7 @@ class EmptyCollections extends StatelessWidget {
               height: 10,
             ),
             Text(
-              "Create your own collection of movies and tv shows.",
+              "Create your own collection of movies.",
               textAlign: TextAlign.center,
               style: normalText.copyWith(color: Colors.white.withOpacity(.9)),
             ),

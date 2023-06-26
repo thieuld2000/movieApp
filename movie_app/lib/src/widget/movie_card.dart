@@ -56,7 +56,7 @@ class MovieCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: CachedNetworkImage(
-                imageUrl: 'http://image.tmdb.org/t/p/w500/$poster',
+                imageUrl: poster,
                 fit: BoxFit.cover,
               ),
             ),
@@ -116,7 +116,7 @@ class HorizontalMovieCard extends StatelessWidget {
                   child: AspectRatio(
                     aspectRatio: 9 / 14,
                     child: CachedNetworkImage(
-                      imageUrl: 'http://image.tmdb.org/t/p/w500/$poster',
+                      imageUrl: poster,
                       fit: BoxFit.cover,
                       progressIndicatorBuilder:
                           (context, url, downloadProgress) => Container(
@@ -131,10 +131,11 @@ class HorizontalMovieCard extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.only(
+                    left: 16.0, bottom: 120, top: 16.0, right: 16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
                       name,
@@ -146,18 +147,6 @@ class HorizontalMovieCard extends StatelessWidget {
                         color: color,
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      date,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: normalText.copyWith(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w900,
-                        color: color.withOpacity(.8),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
                     Row(
                       children: [
                         IconTheme(
@@ -178,6 +167,18 @@ class HorizontalMovieCard extends StatelessWidget {
                         )
                       ],
                     ),
+                    const SizedBox(height: 8),
+                    Text(
+                      date,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: normalText.copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w900,
+                        color: color.withOpacity(.8),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
                   ],
                 ),
               ),

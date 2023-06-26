@@ -47,7 +47,7 @@ class CastPersonalInfo {
       birthday: string,
       id: json['id'].toString(),
       image: json['profile_path'] != null
-          ? "https://image.tmdb.org/t/p/original ${json['profile_path']}"
+          ? "https://image.tmdb.org/t/p/original${json['profile_path']}"
           : "https://images.pexels.com/photos/4089658/pexels-photo-4089658.jpeg?cs=srgb&dl=pexels-victoria-borodinova-4089658.jpg&fm=jpg",
       imdbId: json['imdb_id'] ?? "",
       name: json['name'] ?? '',
@@ -75,16 +75,16 @@ class SocialMediaInfo {
   factory SocialMediaInfo.fromJson(json) {
     return SocialMediaInfo(
       facebook: json['facebook_id'] != null
-          ? "https://facebook.com/  ${json['facebook_id']}"
+          ? "https://facebook.com/${json['facebook_id']}"
           : "",
       imdbId: json['imdb_id'] != null
-          ? "https://www.imdb.com/name/ ${json['imdb_id']}"
+          ? "https://www.imdb.com/name/${json['imdb_id']}"
           : "",
       instagram: json['instagram_id'] != null
-          ? "https://www.instagram.com/ ${json['instagram_id']}"
+          ? "https://www.instagram.com/${json['instagram_id']}"
           : "",
       twitter: json['twitter_id'] != null
-          ? "https://twitter.com/ ${json['twitter_id']}"
+          ? "https://twitter.com/${json['twitter_id']}"
           : "",
     );
   }

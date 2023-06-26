@@ -12,12 +12,10 @@ class CastinfoInitial extends CastinfoState {}
 class CastinfoLoaded extends CastinfoState {
   final CastPersonalInfo info;
   final List<ImageBackdrop> images;
-  final List<Movie> movies;
 
   const CastinfoLoaded({
     required this.info,
     required this.images,
-    required this.movies,
   });
 }
 

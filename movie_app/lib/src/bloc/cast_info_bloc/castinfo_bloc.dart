@@ -21,7 +21,6 @@ class CastinfoBloc extends Bloc<CastinfoEvent, CastinfoState> {
 
           emit(CastinfoLoaded(
             info: data[0],
-            movies: data[2],
             images: data[1],
           ));
         } on FetchDataError catch (e) {

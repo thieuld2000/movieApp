@@ -8,12 +8,11 @@ import 'animation.dart';
 import 'constants.dart';
 
 class CastList extends StatelessWidget {
+  final List<CastInfo> castList;
   const CastList({
     Key? key,
     required this.castList,
   }) : super(key: key);
-
-  final List<CastInfo> castList;
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +45,12 @@ class CastList extends StatelessWidget {
                     message: "${castList[i].name} as ${castList[i].character}",
                     child: Container(
                       width: 130,
-                      constraints: const BoxConstraints(minHeight: 290),
+                      constraints: const BoxConstraints(minHeight: 280),
                       child: Column(
                         children: [
                           Container(
-                              height: 200,
-                              width: 130,
+                              height: 130,
+                              width: 120,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.grey.shade900,

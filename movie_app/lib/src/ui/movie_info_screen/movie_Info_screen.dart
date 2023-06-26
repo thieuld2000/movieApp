@@ -6,22 +6,19 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/src/bloc/cast_info_bloc/castinfo_bloc.dart';
-import 'package:movie_app/src/model/cast_list.dart';
-import 'package:movie_app/src/model/movie.dart';
-import 'package:readmore/readmore.dart';
 
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:movie_app/src/model/movie.dart';
+import 'package:movie_app/src/widget/add_button/add_button.dart';
+
+import 'package:readmore/readmore.dart';
 
 import '../../bloc/movie_info_bloc/movie_info_bloc.dart';
 import '../../bloc/movie_info_bloc/movie_info_event.dart';
 import '../../bloc/movie_info_bloc/movie_info_state.dart';
 import '../../widget/animation.dart';
-import '../../widget/app_bar.dart';
+import '../../widget/cast_list.dart';
 import '../../widget/constants.dart';
-import '../../widget/draggable_sheet.dart';
 import '../../widget/expandable_group.dart';
-import '../../widget/horizontal_list_cards.dart';
 import '../../widget/image_view.dart';
 import '../../widget/no_results_found.dart';
 import '../../widget/star_icon_display.dart';
@@ -44,34 +41,31 @@ class MovieDetailsScreenState extends State<MovieDetailsScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => MovieInfoBloc()..add(LoadMoviesInfo(id: widget.id)),
-      child: BlocProvider(
-        create: (context) => CastinfoBloc()..add(LoadCastInfo(id: widget.id)),
-        child: BlocBuilder<MovieInfoBloc, MovieInfoState>(
-          builder: (context, state) {
-            if (state is MovieInfoLoaded) {
-              return MovieDetailScreenWidget(
-                info: state.tmdbData,
-                backdrops: state.backdrops,
-                castList: state.cast,
-                imdbInfo: state.imdbData,
-                backdrop: widget.backdrop,
-              );
-            } else if (state is MovieInfoError) {
-              return const ErrorPage();
-            } else if (state is MovieInfoLoading) {
-              return Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.grey.shade700,
-                    strokeWidth: 2,
-                    backgroundColor: Colors.cyanAccent,
-                  ),
+      child: BlocBuilder<MovieInfoBloc, MovieInfoState>(
+        builder: (context, state) {
+          if (state is MovieInfoLoaded) {
+            return MovieDetailScreenWidget(
+              info: state.tmdbData,
+              backdrops: state.backdrops,
+              castList: state.cast,
+              imdbInfo: state.imdbData,
+              backdrop: widget.backdrop,
+            );
+          } else if (state is MovieInfoError) {
+            return const ErrorPage();
+          } else if (state is MovieInfoLoading) {
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(
+                  color: Colors.grey.shade700,
+                  strokeWidth: 2,
+                  backgroundColor: Colors.cyanAccent,
                 ),
-              );
-            }
-            return const Scaffold();
-          },
-        ),
+              ),
+            );
+          }
+          return const Scaffold();
+        },
       ),
     );
   }
@@ -97,6 +91,7 @@ class MovieDetailScreenWidget extends StatelessWidget {
     List<String> tabs = [
       'About movie',
       'Reviews',
+      'Cast',
     ];
     return Scaffold(
       body: Container(
@@ -128,85 +123,14 @@ class MovieDetailScreenWidget extends StatelessWidget {
                                 color: Colors.white,
                               ),
                             ),
-                            CreateIcons(
-                              onTap: () {
-                                showModalBottomSheet<void>(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 30, 34, 45),
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return Container(
-                                      color: Colors.black26,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          const SizedBox(
-                                            height: 14,
-                                          ),
-                                          Container(
-                                            height: 5,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          Column(
-                                            children: [
-                                              CopyLink(
-                                                title: info.title.toString(),
-                                                id: info.tmdbId.toString(),
-                                                type: 'movie',
-                                              ),
-                                              Divider(
-                                                height: .5,
-                                                thickness: .5,
-                                                color: Colors.grey.shade800,
-                                              )
-                                            ],
-                                          ),
-                                          Column(
-                                            children: [
-                                              ListTile(
-                                                onTap: () {
-                                                  launchUrlString(
-                                                      "https://www.themoviedb.org/movie/${info.tmdbId}");
-                                                },
-                                                leading: Icon(
-                                                  CupertinoIcons.share,
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                ),
-                                                title: Text(
-                                                  "Open in Brower ",
-                                                  style: normalText.copyWith(
-                                                      color: Colors.white),
-                                                ),
-                                              ),
-                                              Divider(
-                                                height: .5,
-                                                thickness: .5,
-                                                color: Colors.grey.shade800,
-                                              )
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                              child: const Icon(
-                                CupertinoIcons.ellipsis,
-                                color: Colors.white,
-                              ),
+                            AddButton(
+                              id: info.tmdbId,
+                              title: info.title,
+                              rate: info.rateing,
+                              poster: info.poster,
+                              type: 'movie',
+                              date: info.releaseDate,
+                              genre: info.genres.toString(),
                             ),
                           ],
                         ),
@@ -216,16 +140,16 @@ class MovieDetailScreenWidget extends StatelessWidget {
                       height: 20,
                     ),
                     InkWell(
-                      onTap: () {
-                        pushNewScreen(
-                          context,
-                          ViewPhotos(
-                            imageIndex: 0,
-                            color: Theme.of(context).primaryColor,
-                            imageList: backdrops,
-                          ),
-                        );
-                      },
+                      // onTap: () {
+                      //   pushNewScreen(
+                      //     context,
+                      //     ViewPhotos(
+                      //       imageIndex: 0,
+                      //       color: Theme.of(context).primaryColor,
+                      //       imageList: backdrops,
+                      //     ),
+                      //   );
+                      // },
                       child: SizedBox(
                         height: MediaQuery.of(context).size.height * (1 - 0.73),
                         width: MediaQuery.of(context).size.width,
@@ -290,7 +214,7 @@ class MovieDetailScreenWidget extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 460, left: 55),
+                  margin: const EdgeInsets.only(top: 450, left: 55),
                   child: Row(children: [
                     Text(
                       " ${info.releaseDate.split("-")[0]}",
@@ -316,13 +240,13 @@ class MovieDetailScreenWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      imdbInfo.genre.split(",")[0].split("(")[1],
+                      imdbInfo.genre.split(",")[0].split("(")[1].split(")")[0],
                       style: normalText.copyWith(color: Colors.white60),
                     ),
                   ]),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 500, left: 30),
+                  margin: const EdgeInsets.only(top: 480, left: 30),
                   child: DefaultTabController(
                     initialIndex: 0,
                     length: tabs.length,
@@ -333,7 +257,9 @@ class MovieDetailScreenWidget extends StatelessWidget {
                       children: [
                         TabBar(
                           isScrollable: true,
-                          indicatorColor: Colors.white60,
+                          indicatorColor: Colors.white24,
+                          indicatorPadding:
+                              const EdgeInsets.only(left: 20.0, right: 20.0),
                           tabs: tabs
                               .map(
                                 (tab) => Tab(
@@ -353,7 +279,7 @@ class MovieDetailScreenWidget extends StatelessWidget {
                               .toList(),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.width / 2 - 50,
+                          height: MediaQuery.of(context).size.width / 2 + 30,
                           child: TabBarView(
                             children: [
                               Tab(
@@ -378,29 +304,35 @@ class MovieDetailScreenWidget extends StatelessWidget {
                                   items: [
                                     ListTile(
                                         title: Text(
-                                          "Writers",
-                                          style: heading.copyWith(
-                                              color: Colors.white,
-                                              fontSize: 16),
-                                        ),
-                                        subtitle: Text(
-                                          imdbInfo.writer,
-                                          style: normalText.copyWith(
-                                              color: Colors.white),
-                                        )),
-                                    ListTile(
-                                        title: Text(
                                           "Runtime",
                                           style: heading.copyWith(
-                                              color: Colors.white,
+                                              color: Colors.white70,
                                               fontSize: 16),
                                         ),
                                         subtitle: Text(
                                           imdbInfo.runtime,
                                           style: normalText.copyWith(
-                                              color: Colors.white),
+                                              color: Colors.white60),
                                         )),
+                                    ListTile(
+                                      title: Text(
+                                        "Genres",
+                                        style: heading.copyWith(
+                                            color: Colors.white70,
+                                            fontSize: 16),
+                                      ),
+                                      subtitle: Text(
+                                        imdbInfo.genre,
+                                        style: normalText.copyWith(
+                                            color: Colors.white60),
+                                      ),
+                                    )
                                   ],
+                                ),
+                              ),
+                              Tab(
+                                child: CastList(
+                                  castList: castList,
                                 ),
                               )
                             ],
@@ -416,21 +348,6 @@ class MovieDetailScreenWidget extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
-  String k_m_b_generator(num) {
-    if (num > 999 && num < 99999) {
-      return "${(num / 1000).toStringAsFixed(1)} K";
-    } else if (num > 99999 && num < 999999) {
-      return "${(num / 1000).toStringAsFixed(0)} K";
-    } else if (num > 999999 && num < 999999999) {
-      return "${(num / 1000000).toStringAsFixed(1)} M";
-    } else if (num > 999999999) {
-      return "${(num / 1000000000).toStringAsFixed(1)} B";
-    } else {
-      return num.toString();
-    }
   }
 }
 

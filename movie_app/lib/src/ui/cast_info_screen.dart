@@ -4,9 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:readmore/readmore.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../bloc/cast_info_bloc/castinfo_bloc.dart';
@@ -16,7 +14,6 @@ import '../widget/animation.dart';
 import '../widget/app_bar.dart';
 import '../widget/constants.dart';
 import '../widget/draggable_sheet.dart';
-import '../widget/horizontal_list_cards.dart';
 import '../widget/image_view.dart';
 import '../widget/no_results_found.dart';
 
@@ -44,7 +41,6 @@ class CastInFoScreenState extends State<CastInFoScreen> {
         builder: (context, state) {
           if (state is CastinfoLoaded) {
             return CastScreenWidget(
-              movies: state.movies,
               backgroundImage: widget.backdrop,
               info: state.info,
               images: state.images,
@@ -73,13 +69,11 @@ class CastScreenWidget extends StatelessWidget {
   final CastPersonalInfo info;
   final String backgroundImage;
 
-  final List<Movie> movies;
   final List<ImageBackdrop> images;
   const CastScreenWidget({
     Key? key,
     required this.info,
     required this.backgroundImage,
-    required this.movies,
     required this.images,
   }) : super(key: key);
 
@@ -172,8 +166,7 @@ class CastScreenWidget extends StatelessWidget {
                                               ListTile(
                                                 onTap: () {
                                                   launchUrlString(
-                                                      "https://www.themoviedb.org/person/" +
-                                                          info.id);
+                                                      "https://www.themoviedb.org/person/${info.id}");
                                                 },
                                                 leading: Icon(
                                                   CupertinoIcons.share,
@@ -306,7 +299,7 @@ class CastScreenWidget extends StatelessWidget {
                                   style: heading.copyWith(
                                       color: Colors.white, fontSize: 16),
                                 ),
-                                Text(info.birthday + " (${info.old})",
+                                Text("${info.birthday} (${info.old})",
                                     style: normalText.copyWith(
                                       color: Colors.white,
                                     )),
@@ -341,7 +334,7 @@ class CastScreenWidget extends StatelessWidget {
                             delay: const Duration(microseconds: 900),
                             child: Padding(
                               padding: const EdgeInsets.all(14.0),
-                              child: Text("Images of " + info.name,
+                              child: Text("Images of ${info.name}",
                                   style: heading.copyWith(color: Colors.white)),
                             ),
                           ),
@@ -374,7 +367,8 @@ class CastScreenWidget extends StatelessWidget {
                                             width: 130,
                                             child: CachedNetworkImage(
                                                 fit: BoxFit.cover,
-                                                imageUrl: images[i].image),
+                                                imageUrl:
+                                                    images[i].image.toString()),
                                           ),
                                         ),
                                       ),

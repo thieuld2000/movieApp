@@ -8,6 +8,10 @@ import 'package:movie_app/src/bloc/moviebloc/movie_bloc_event.dart';
 import 'package:movie_app/src/bloc/moviebloc/movie_bloc_state.dart';
 import 'package:movie_app/src/ui/category_screen.dart';
 import '../model/movie.dart';
+import '../model/results/cubit/search_results_cubit.dart';
+import '../model/results/search_results.dart';
+import '../widget/animation.dart';
+import '../widget/constants.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -59,21 +63,58 @@ Widget _buildBody(BuildContext context) {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 0.5),
                 decoration: BoxDecoration(
-                  color: const Color.fromRGBO(106, 110, 116, 0.5),
+                  color: const Color.fromARGB(255, 74, 77, 81),
                   borderRadius: BorderRadius.circular(24),
                 ),
-                child: const TextField(
+                child: TextField(
+                  style: normalText.copyWith(color: Colors.white),
+                  keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(borderSide: BorderSide.none),
-                      hintText: "Search",
-                      hintStyle: TextStyle(
-                        color: Colors.white54,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 17,
-                        fontFamily: 'muli',
+                    suffixIcon: Icon(
+                      Icons.search,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    hintText: "Search",
+                    filled: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 0,
+                      horizontal: 20,
+                    ),
+                    hintStyle: TextStyle(
+                      letterSpacing: .0,
+                      color: Colors.white70.withOpacity(.7),
+                    ),
+                    fillColor: Colors.grey.withOpacity(.1),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade600,
+                        width: .2,
                       ),
-                      suffixIcon: Icon(Icons.search),
-                      suffixIconColor: Colors.white54),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade600,
+                        width: .2,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade600,
+                        width: .2,
+                      ),
+                    ),
+                  ),
+                  onSubmitted: (query) {
+                    if (query.isNotEmpty) {
+                      pushNewScreen(
+                          context,
+                          BlocProvider(
+                            create: (context) =>
+                                SearchResultsCubit()..init(query),
+                            child: SearchResults(query: query),
+                          ));
+                    }
+                  },
                 ),
               ),
             ),
@@ -130,27 +171,10 @@ Widget _buildBody(BuildContext context) {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(
+                              const Padding(
+                                padding: EdgeInsets.only(
                                   bottom: 15,
                                   left: 15,
-                                ),
-                                child: Text(
-                                  movie.title!.toUpperCase(),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    fontFamily: 'muli',
-                                    shadows: [
-                                      Shadow(
-                                          color: Colors.black.withOpacity(0.5),
-                                          offset: const Offset(10, 10),
-                                          blurRadius: 15)
-                                    ],
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
                                 ),
                               )
                             ],

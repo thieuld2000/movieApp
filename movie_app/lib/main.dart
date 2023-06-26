@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/src/ui/bottom_nav_bar.dart';
 
-void main() {
+void main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // var dir = await getApplicationDocumentsDirectory();
+  // await Hive.initFlutter(dir.path);
+  // await Hive.openBox('Movies');
+  // await Hive.openBox('ADD');
   runApp(const MyApp());
 }
 

@@ -22,8 +22,8 @@ class MovieInfoLoaded extends MovieInfoState {
   const MovieInfoLoaded({
     required this.tmdbData,
     required this.imdbData,
-    required this.cast,
     required this.backdrops,
+    required this.cast,
   });
 }
 
